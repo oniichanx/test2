@@ -69,3 +69,40 @@ if(e.key==="Escape") lightbox.style.display="none"
 if(e.key==="ArrowRight") next.click()
 if(e.key==="ArrowLeft") prev.click()
 })
+
+
+
+/* scroll to top */
+
+const topBtn=document.getElementById("topBtn")
+
+window.onscroll=()=>{
+if(document.documentElement.scrollTop>400){
+topBtn.style.display="block"
+}else{
+topBtn.style.display="none"
+}
+}
+
+topBtn.onclick=()=>{
+window.scrollTo({
+top:0,
+behavior:"smooth"
+})
+}
+
+/* theme toggle */
+
+const themeBtn=document.getElementById("themeBtn")
+
+themeBtn.onclick=()=>{
+
+document.body.classList.toggle("light")
+
+if(document.body.classList.contains("light")){
+themeBtn.innerText="☀️"
+}else{
+themeBtn.innerText="🌙"
+}
+
+}
