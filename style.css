@@ -148,18 +148,23 @@ color:white;
 cursor:pointer;
 }
 
-/* light mode */
+/* light mode text fix */
 
-body.light{
-background:#f5f5f5;
-color:#111;
-}
-
-body.light .card{
-box-shadow:0 10px 25px rgba(0,0,0,.1);
-}
-
-body.light #themeBtn{
-background:#ddd;
+body.light .overlay{
 color:#000;
+background:linear-gradient(
+to top,
+rgba(255,255,255,.95),
+rgba(255,255,255,0)
+);
+}
+
+body.light .tag{
+background:rgba(0,0,0,.15);
+color:#000;
+}
+
+body.light #download{
+background:#2da44e;
+color:#fff;
 }
