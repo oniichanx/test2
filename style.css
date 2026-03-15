@@ -1,24 +1,7 @@
-body{
-margin:0;
-font-family:sans-serif;
-background:radial-gradient(circle at top,#161b22,#0d1117 70%);
-color:white;
-}
-
-header{
-text-align:center;
-padding:30px 20px;
-}
-
-header h1{
-margin:0;
-font-size:34px;
-}
-
-header p{
-opacity:.7;
-margin-top:6px;
-}
+body{margin:0;font-family:sans-serif;background:radial-gradient(circle at top,#161b22,#0d1117 70%);color:white;}
+header{text-align:center;padding:30px 20px;}
+header h1{margin:0;font-size:34px;}
+header p{opacity:.7;margin-top:6px;}
 
 .gallery{
 column-count:5;
@@ -120,7 +103,6 @@ color:white;
 }
 
 /* scroll top button */
-
 #topBtn{
 position:fixed;
 bottom:30px;
@@ -137,7 +119,6 @@ box-shadow:0 5px 20px rgba(0,0,0,.3);
 }
 
 /* theme button */
-
 #themeBtn{
 position:fixed;
 bottom:30px;
@@ -152,14 +133,9 @@ cursor:pointer;
 }
 
 /* light mode text fix */
-
 body.light .overlay{
 color:#000;
-background:linear-gradient(
-to top,
-rgba(255,255,255,.95),
-rgba(255,255,255,0)
-);
+background:linear-gradient(to top,rgba(255,255,255,.95),rgba(255,255,255,0));
 }
 
 body.light .tag{
@@ -170,4 +146,9 @@ color:#000;
 body.light #download{
 background:#2da44e;
 color:#fff;
+}
+
+body.light{
+background:radial-gradient(circle at top,#e6edf3,#ffffff 70%);
+color:#111;
 }
