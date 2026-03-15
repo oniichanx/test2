@@ -1,149 +1,108 @@
-document.addEventListener("DOMContentLoaded", () => {
+const gallery=document.getElementById("gallery")
+const lightbox=document.getElementById("lightbox")
+const lightboxImg=document.getElementById("lightbox-img")
+const prev=document.getElementById("prev")
+const next=document.getElementById("next")
+const download=document.getElementById("download")
 
-const gallery = document.getElementById("gallery")
-const lightbox = document.getElementById("lightbox")
-const lightboxImg = document.getElementById("lightbox-img")
-const prev = document.getElementById("prev")
-const next = document.getElementById("next")
-const download = document.getElementById("download")
-const topBtn = document.getElementById("topBtn")
-const themeBtn = document.getElementById("themeBtn")
-
-let images = []
-let current = 0
-
-
-// โหลดภาพ
+let images=[]
+let index=0
 
 fetch("images.json")
-.then(res => res.json())
-.then(data => {
+.then(res=>res.json())
+.then(data=>{
+images=data
 
-images = data
+data.forEach((file,i)=>{
+const card=document.createElement("div")
+card.className="card"
 
-data.forEach((src, index) => {
+const img=document.createElement("img")
+img.src="wallpaper/"+file
+img.loading="lazy"
+img.decoding="async"
 
-const card = document.createElement("div")
-card.className = "card"
+img.onerror=()=>card.remove()
 
-const img = document.createElement("img")
-img.src = src
-img.loading = "lazy"
+const tag=document.createElement("div")
+tag.className="tag"
+tag.innerText="daily"
 
-card.appendChild(img)
+const overlay=document.createElement("div")
+overlay.className="overlay"
+overlay.innerText=file
 
-card.onclick = () => openLightbox(index)
-
+card.append(img,tag,overlay)
 gallery.appendChild(card)
 
+card.onclick=()=>{
+index=i
+openImage()
+}
+})
 })
 
+function openImage(){
+lightbox.style.display="flex"
+lightboxImg.src="wallpaper/"+images[index]
+download.href="wallpaper/"+images[index]
+}
+
+prev.onclick=()=>{
+index--
+if(index<0) index=images.length-1
+openImage()
+}
+
+next.onclick=()=>{
+index++
+if(index>=images.length) index=0
+openImage()
+}
+
+lightbox.onclick=e=>{
+if(e.target===lightbox) lightbox.style.display="none"
+}
+
+document.addEventListener("keydown",e=>{
+if(e.key==="Escape") lightbox.style.display="none"
+if(e.key==="ArrowRight") next.click()
+if(e.key==="ArrowLeft") prev.click()
 })
 
 
-// เปิด lightbox
 
-function openLightbox(i){
+/* scroll to top */
 
-current = i
+const topBtn=document.getElementById("topBtn")
 
-lightbox.style.display = "flex"
-
-lightboxImg.src = images[i]
-
-download.href = images[i]
-
-}
-
-
-// ปิด lightbox
-
-lightbox.addEventListener("click", e => {
-
-if(e.target === lightbox){
-lightbox.style.display = "none"
-}
-
-})
-
-
-// prev
-
-prev.onclick = e => {
-
-e.stopPropagation()
-
-current--
-
-if(current < 0){
-current = images.length - 1
-}
-
-openLightbox(current)
-
-}
-
-
-// next
-
-next.onclick = e => {
-
-e.stopPropagation()
-
-current++
-
-if(current >= images.length){
-current = 0
-}
-
-openLightbox(current)
-
-}
-
-
-// scroll top
-
-window.addEventListener("scroll", () => {
-
-if(window.scrollY > 400){
-topBtn.style.display = "flex"
+window.onscroll=()=>{
+if(document.documentElement.scrollTop>400){
+topBtn.style.display="block"
 }else{
-topBtn.style.display = "none"
+topBtn.style.display="none"
+}
 }
 
-})
-
-topBtn.onclick = () => {
-
+topBtn.onclick=()=>{
 window.scrollTo({
 top:0,
 behavior:"smooth"
 })
-
 }
 
+/* theme toggle */
 
-// theme
+const themeBtn=document.getElementById("themeBtn")
 
-const savedTheme = localStorage.getItem("theme")
-
-if(savedTheme === "light"){
-document.body.classList.add("light")
-themeBtn.textContent = "☀️"
-}
-
-themeBtn.onclick = () => {
+themeBtn.onclick=()=>{
 
 document.body.classList.toggle("light")
 
 if(document.body.classList.contains("light")){
-themeBtn.textContent = "☀️"
-localStorage.setItem("theme","light")
+themeBtn.innerText="☀️"
 }else{
-themeBtn.textContent = "🌙"
-localStorage.setItem("theme","dark")
+themeBtn.innerText="🌙"
 }
 
 }
-
-})
