@@ -107,22 +107,43 @@ themeBtn.innerText="🌙"
 
 }
 
+
+
+
 /* masonry resize */
 
 function resizeGrid(){
+
 const grid=document.querySelector(".gallery")
 const rowHeight=10
 const rowGap=18
 
 grid.querySelectorAll(".card").forEach(card=>{
+
 const img=card.querySelector("img")
+
+if(!img.complete)return
+
 const height=img.getBoundingClientRect().height
+
 const span=Math.ceil((height+rowGap)/(rowHeight+rowGap))
+
 card.style.gridRowEnd="span "+span
+
 })
+
 }
 
+/* รอภาพโหลด */
+
 window.addEventListener("load",resizeGrid)
+
+document.querySelectorAll(".card img").forEach(img=>{
+
+img.addEventListener("load",resizeGrid)
+
+})
+
 window.addEventListener("resize",resizeGrid)
 
 /* swipe support */
