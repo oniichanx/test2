@@ -8,10 +8,27 @@ const download=document.getElementById("download")
 let images=[]
 let index=0
 
-fetch("images.json")
+fetch("images.json?v="+Date.now())
 .then(res=>res.json())
-.then(data=>{
-images=data
+.then(images=>{
+
+const gallery=document.getElementById("gallery")
+
+images.forEach(file=>{
+
+const card=document.createElement("div")
+card.className="card"
+
+const img=document.createElement("img")
+img.src="wallpaper/"+file
+img.loading="lazy"
+
+card.appendChild(img)
+gallery.appendChild(card)
+
+})
+
+})
 
 data.forEach((file,i)=>{
 const card=document.createElement("div")
