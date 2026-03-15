@@ -152,3 +152,21 @@ body.light{
 background:radial-gradient(circle at top,#e6edf3,#ffffff 70%);
 color:#111;
 }
+
+/* responsive */
+
+@media (max-width:1200px){
+.gallery{column-count:4;}
+}
+
+@media (max-width:900px){
+.gallery{column-count:3;}
+}
+
+@media (max-width:600px){
+.gallery{column-count:2;padding:15px;}
+}
+
+@media (max-width:400px){
+.gallery{column-count:1;}
+}
