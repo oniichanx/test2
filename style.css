@@ -170,15 +170,3 @@ color:#111;
 @media (max-width:400px){
 .gallery{column-count:1;}
 }
-
-
-
-
-#lightbox img{
-user-select:none;
--webkit-user-drag:none;
-}
-
-#prev,#next{
-touch-action:manipulation;
-}
