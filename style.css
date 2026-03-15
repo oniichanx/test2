@@ -207,3 +207,19 @@ color:#000;
 body.light #download{
 background:#2da44e;
 }
+
+/* smooth scroll */
+html{
+scroll-behavior:smooth;
+}
+
+/* prevent image drag */
+img{
+user-select:none;
+-webkit-user-drag:none;
+}
+
+/* image lazy transition */
+.card img{
+transition:opacity .3s ease;
+}

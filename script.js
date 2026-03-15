@@ -18,8 +18,8 @@ const card=document.createElement("div")
 card.className="card"
 
 const img=document.createElement("img")
-img.src="wallpaper/"+file
 img.loading="lazy"
+img.src="wallpaper/"+file
 img.decoding="async"
 
 img.onerror=()=>card.remove()
@@ -143,3 +143,21 @@ swipeLock = false
 },250)
 
 }
+
+
+
+/* close lightbox when clicking background */
+
+lightbox.addEventListener("click",e=>{
+if(e.target===lightbox){
+lightbox.style.display="none"
+}
+})
+
+/* close with ESC */
+
+document.addEventListener("keydown",e=>{
+if(e.key==="Escape"){
+lightbox.style.display="none"
+}
+})
