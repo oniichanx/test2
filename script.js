@@ -106,3 +106,76 @@ themeBtn.innerText="🌙"
 }
 
 }
+
+/* masonry resize */
+
+function resizeGrid(){
+const grid=document.querySelector(".gallery")
+const rowHeight=10
+const rowGap=18
+
+grid.querySelectorAll(".card").forEach(card=>{
+const img=card.querySelector("img")
+const height=img.getBoundingClientRect().height
+const span=Math.ceil((height+rowGap)/(rowHeight+rowGap))
+card.style.gridRowEnd="span "+span
+})
+}
+
+window.addEventListener("load",resizeGrid)
+window.addEventListener("resize",resizeGrid)
+
+/* swipe support */
+
+let startX=0
+
+document.getElementById("lightbox").addEventListener("touchstart",e=>{
+startX=e.touches[0].clientX
+})
+
+document.getElementById("lightbox").addEventListener("touchend",e=>{
+let endX=e.changedTouches[0].clientX
+
+if(startX-endX>50){
+next.click()
+}
+
+if(endX-startX>50){
+prev.click()
+}
+})
+
+/* pinch zoom */
+
+let scale=1
+let startDistance=0
+const img=document.querySelector("#lightbox img")
+
+document.getElementById("lightbox").addEventListener("touchmove",e=>{
+
+if(e.touches.length==2){
+
+const dx=e.touches[0].clientX-e.touches[1].clientX
+const dy=e.touches[0].clientY-e.touches[1].clientY
+
+const distance=Math.sqrt(dx*dx+dy*dy)
+
+if(!startDistance) startDistance=distance
+
+scale=distance/startDistance
+
+img.style.transform="scale("+scale+")"
+
+}
+
+})
+
+document.getElementById("lightbox").addEventListener("touchend",()=>{
+startDistance=0
+})
+
+/* lazy load images */
+
+document.querySelectorAll("img").forEach(img=>{
+img.loading="lazy"
+})
