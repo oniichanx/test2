@@ -260,3 +260,25 @@ background:#2da44e;
 @media (max-width:400px){
 .gallery{column-count:1;}
 }
+
+/* theme button light mode */
+
+body.light #themeBtn{
+background:rgba(200,200,200,.8);
+color:#000;
+}
+
+body.light #topBtn{
+background:#2da44e;
+}
+
+/* hover effect */
+
+#themeBtn:hover{
+transform:scale(1.1) rotate(15deg);
+transition:.25s;
+}
+
+body.light #themeBtn:hover{
+background:#ddd;
+}
