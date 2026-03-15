@@ -106,3 +106,56 @@ themeBtn.innerText="🌙"
 }
 
 }
+
+
+
+
+
+/* ---------------- mobile swipe ---------------- */
+
+let startX = 0
+let endX = 0
+
+const lightbox = document.getElementById("lightbox")
+const prev = document.getElementById("prev")
+const next = document.getElementById("next")
+
+lightbox.addEventListener("touchstart", e=>{
+startX = e.changedTouches[0].screenX
+})
+
+lightbox.addEventListener("touchend", e=>{
+endX = e.changedTouches[0].screenX
+handleSwipe()
+})
+
+function handleSwipe(){
+
+let diff = startX - endX
+
+if(Math.abs(diff) < 50) return
+
+if(diff > 0){
+next.click()
+}else{
+prev.click()
+}
+
+}
+
+/* ---------------- lock scroll when open image ---------------- */
+
+const lightboxImg = document.getElementById("lightbox-img")
+const download = document.getElementById("download")
+
+function openImage(){
+lightbox.style.display="flex"
+document.body.style.overflow="hidden"
+}
+
+lightbox.onclick = e=>{
+if(e.target === lightbox){
+lightbox.style.display="none"
+document.body.style.overflow=""
+}
+}
