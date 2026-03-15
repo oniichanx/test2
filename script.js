@@ -1,163 +1,149 @@
-const gallery=document.getElementById("gallery")
-const lightbox=document.getElementById("lightbox")
-const lightboxImg=document.getElementById("lightbox-img")
-const prev=document.getElementById("prev")
-const next=document.getElementById("next")
-const download=document.getElementById("download")
+document.addEventListener("DOMContentLoaded", () => {
 
-let images=[]
-let index=0
+const gallery = document.getElementById("gallery")
+const lightbox = document.getElementById("lightbox")
+const lightboxImg = document.getElementById("lightbox-img")
+const prev = document.getElementById("prev")
+const next = document.getElementById("next")
+const download = document.getElementById("download")
+const topBtn = document.getElementById("topBtn")
+const themeBtn = document.getElementById("themeBtn")
+
+let images = []
+let current = 0
+
+
+// โหลดภาพ
 
 fetch("images.json")
-.then(res=>res.json())
-.then(data=>{
-images=data
+.then(res => res.json())
+.then(data => {
 
-data.forEach((file,i)=>{
-const card=document.createElement("div")
-card.className="card"
+images = data
 
-const img=document.createElement("img")
-img.loading="lazy"
-img.src="wallpaper/"+file
-img.decoding="async"
+data.forEach((src, index) => {
 
-img.onerror=()=>card.remove()
+const card = document.createElement("div")
+card.className = "card"
 
-const tag=document.createElement("div")
-tag.className="tag"
-tag.innerText="daily"
+const img = document.createElement("img")
+img.src = src
+img.loading = "lazy"
 
-const overlay=document.createElement("div")
-overlay.className="overlay"
-overlay.innerText=file
+card.appendChild(img)
 
-card.append(img,tag,overlay)
+card.onclick = () => openLightbox(index)
+
 gallery.appendChild(card)
 
-card.onclick=()=>{
-index=i
-openImage()
-}
-})
 })
 
-function openImage(){
-lightbox.style.display="flex"
-lightboxImg.src="wallpaper/"+images[index]
-download.href="wallpaper/"+images[index]
-}
-
-prev.onclick=()=>{
-index--
-if(index<0) index=images.length-1
-openImage()
-}
-
-next.onclick=()=>{
-index++
-if(index>=images.length) index=0
-openImage()
-}
-
-lightbox.onclick=e=>{
-if(e.target===lightbox) lightbox.style.display="none"
-}
-
-document.addEventListener("keydown",e=>{
-if(e.key==="Escape") lightbox.style.display="none"
-if(e.key==="ArrowRight") next.click()
-if(e.key==="ArrowLeft") prev.click()
 })
 
 
+// เปิด lightbox
 
-/* scroll to top */
+function openLightbox(i){
 
-const topBtn=document.getElementById("topBtn")
+current = i
 
-window.onscroll=()=>{
-if(document.documentElement.scrollTop>400){
-topBtn.style.display="block"
+lightbox.style.display = "flex"
+
+lightboxImg.src = images[i]
+
+download.href = images[i]
+
+}
+
+
+// ปิด lightbox
+
+lightbox.addEventListener("click", e => {
+
+if(e.target === lightbox){
+lightbox.style.display = "none"
+}
+
+})
+
+
+// prev
+
+prev.onclick = e => {
+
+e.stopPropagation()
+
+current--
+
+if(current < 0){
+current = images.length - 1
+}
+
+openLightbox(current)
+
+}
+
+
+// next
+
+next.onclick = e => {
+
+e.stopPropagation()
+
+current++
+
+if(current >= images.length){
+current = 0
+}
+
+openLightbox(current)
+
+}
+
+
+// scroll top
+
+window.addEventListener("scroll", () => {
+
+if(window.scrollY > 400){
+topBtn.style.display = "flex"
 }else{
-topBtn.style.display="none"
-}
+topBtn.style.display = "none"
 }
 
-topBtn.onclick=()=>{
+})
+
+topBtn.onclick = () => {
+
 window.scrollTo({
 top:0,
 behavior:"smooth"
 })
+
 }
 
-/* theme toggle */
 
-const themeBtn=document.getElementById("themeBtn")
+// theme
 
-themeBtn.onclick=()=>{
+const savedTheme = localStorage.getItem("theme")
+
+if(savedTheme === "light"){
+document.body.classList.add("light")
+themeBtn.textContent = "☀️"
+}
+
+themeBtn.onclick = () => {
 
 document.body.classList.toggle("light")
 
 if(document.body.classList.contains("light")){
-themeBtn.innerText="☀️"
+themeBtn.textContent = "☀️"
+localStorage.setItem("theme","light")
 }else{
-themeBtn.innerText="🌙"
+themeBtn.textContent = "🌙"
+localStorage.setItem("theme","dark")
 }
 
 }
 
-
-
-let touchStartX = 0
-let touchEndX = 0
-let swipeLock = false
-
-lightbox.addEventListener("touchstart", e => {
-touchStartX = e.changedTouches[0].screenX
-}, { passive:true })
-
-lightbox.addEventListener("touchend", e => {
-touchEndX = e.changedTouches[0].screenX
-handleSwipe()
-}, { passive:true })
-
-function handleSwipe(){
-
-if(swipeLock) return
-
-const diff = touchEndX - touchStartX
-
-if(Math.abs(diff) < 60) return
-
-swipeLock = true
-
-if(diff < 0){
-next.click()
-}else{
-prev.click()
-}
-
-setTimeout(()=>{
-swipeLock = false
-},250)
-
-}
-
-
-
-/* close lightbox when clicking background */
-
-lightbox.addEventListener("click",e=>{
-if(e.target===lightbox){
-lightbox.style.display="none"
-}
-})
-
-/* close with ESC */
-
-document.addEventListener("keydown",e=>{
-if(e.key==="Escape"){
-lightbox.style.display="none"
-}
 })
