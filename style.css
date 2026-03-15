@@ -5,8 +5,6 @@ background:radial-gradient(circle at top,#161b22,#0d1117 70%);
 color:white;
 }
 
-/* header */
-
 header{
 text-align:center;
 padding:30px 20px;
@@ -22,23 +20,20 @@ opacity:.7;
 margin-top:6px;
 }
 
-/* gallery */
-
 .gallery{
-display:grid;
-grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
-gap:20px;
+column-count:5;
+column-gap:20px;
 padding:30px;
-max-width:1400px;
+max-width:1500px;
 margin:auto;
 }
 
-/* card */
-
 .card{
-position:relative;
+break-inside:avoid;
+margin-bottom:20px;
 border-radius:18px;
 overflow:hidden;
+position:relative;
 cursor:pointer;
 box-shadow:0 10px 25px rgba(0,0,0,.25);
 transition:.3s;
@@ -51,10 +46,9 @@ box-shadow:0 20px 40px rgba(0,0,0,.4);
 
 .card img{
 width:100%;
+height:auto;
 display:block;
 }
-
-/* tag */
 
 .tag{
 position:absolute;
@@ -67,25 +61,16 @@ border-radius:20px;
 font-size:12px;
 }
 
-/* overlay */
-
 .overlay{
 position:absolute;
 bottom:0;
 left:0;
 width:100%;
-padding:20px;
-
-background:linear-gradient(
-to top,
-rgba(0,0,0,.85),
-rgba(0,0,0,0)
-);
-
-font-size:13px;
+padding:18px;
+background:linear-gradient(to top,rgba(0,0,0,.85),rgba(0,0,0,0));
+font-size:12px;
+opacity:.9;
 }
-
-/* popup */
 
 #lightbox{
 position:fixed;
@@ -93,7 +78,7 @@ top:0;
 left:0;
 width:100%;
 height:100%;
-background:rgba(0,0,0,.75);
+background:rgba(0,0,0,.8);
 backdrop-filter:blur(10px);
 display:none;
 align-items:center;
