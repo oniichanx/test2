@@ -54,11 +54,13 @@ display:block;
 position:absolute;
 top:12px;
 left:12px;
-background:rgba(0,0,0,.6);
-backdrop-filter:blur(10px);
+background:rgba(0,0,0,.55);
+backdrop-filter:blur(8px);
 padding:6px 12px;
 border-radius:20px;
 font-size:12px;
+color:#fff;
+font-weight:500;
 }
 
 .overlay{
@@ -69,7 +71,8 @@ width:100%;
 padding:18px;
 background:linear-gradient(to top,rgba(0,0,0,.85),rgba(0,0,0,0));
 font-size:12px;
-opacity:.9;
+color:#ffffff;
+text-shadow:0 2px 8px rgba(0,0,0,.9);
 }
 
 #lightbox{
