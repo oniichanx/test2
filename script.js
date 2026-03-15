@@ -106,3 +106,40 @@ themeBtn.innerText="🌙"
 }
 
 }
+
+
+
+let touchStartX = 0
+let touchEndX = 0
+let swipeLock = false
+
+lightbox.addEventListener("touchstart", e => {
+touchStartX = e.changedTouches[0].screenX
+}, { passive:true })
+
+lightbox.addEventListener("touchend", e => {
+touchEndX = e.changedTouches[0].screenX
+handleSwipe()
+}, { passive:true })
+
+function handleSwipe(){
+
+if(swipeLock) return
+
+const diff = touchEndX - touchStartX
+
+if(Math.abs(diff) < 60) return
+
+swipeLock = true
+
+if(diff < 0){
+next.click()
+}else{
+prev.click()
+}
+
+setTimeout(()=>{
+swipeLock = false
+},250)
+
+}
